@@ -46,7 +46,6 @@ export class UserService {
     try {
       return await this.userModel
         .find()
-        .populate('role')
         .select('-password')
         .exec();
     } catch (error) {
