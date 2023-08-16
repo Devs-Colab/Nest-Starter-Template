@@ -61,7 +61,6 @@ export class UserService {
     try {
       const user = await this.userModel
         .findById(id)
-        .populate('role')
         .select('-password')
         .exec();
 
@@ -75,19 +74,10 @@ export class UserService {
     }
   }
 
-  async findByRoleId(id: string): Promise<User[]> {
-    try {
-      return await this.userModel.find({ role: id }).select('-password').exec();
-    } catch (error) {
-      throw new NotFoundException('User not found');
-    }
-  }
-
   async findOneByEmail(email: string): Promise<User> {
     try {
       return await this.userModel
         .findOne({ email })
-        .populate('role')
         .select('-password')
         .exec();
     } catch (error) {
@@ -135,7 +125,6 @@ export class UserService {
     try {
       const user = await this.userModel
         .findOne({ email })
-        .populate('role')
         .exec();
       if (
         user &&
